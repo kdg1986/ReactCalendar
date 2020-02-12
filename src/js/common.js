@@ -10,11 +10,11 @@ export const getLastDate = (str) => {
     return date.getDate();
 }
 
-export const dateToString = () => {
-    const date = new Date();
+export const dateToString = (obj) => {    
+    const date = obj || new Date();    
     const mon = (date.getMonth()+1) >= 10 ? (date.getMonth()+1) : "0"+(date.getMonth()+1);
     const day = date.getDate() >= 10 ? date.getDate() : "0"+date.getDate();
-    return date.getFullYear()+mon+day
+    return date.getFullYear()+""+mon+""+day
 }
 
 
