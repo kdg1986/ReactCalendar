@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {dateToString} from '../js/common';
+import CalendarBody from './body';
 
 const Calendar = props => {
-    const prpDate = props.date || dateToString();
-    const arrPrpDate =  /(\d{4})[.|-]*(\d{2})[.|-]*(\d{2})*/.exec(prpDate);    
-    const href = '#'
+    const arrPrpDate =  /^(\d{4})[.|-|/]*(\d{2})[.|-|/]*(\d{2})$/.exec( dateToString(props.date) );    
+    const href = '#';    
     const [ calObj, setCalObj ] = useState({
         thisDate    : arrPrpDate[0]
         ,year       : arrPrpDate[1]
@@ -13,25 +13,27 @@ const Calendar = props => {
         ,defaultDaySelect : props.daySelect || false
     });
 
-    const nextMonth = () => {        
-        const strThisDate = dateToString( new Date( calObj.year,calObj.month,'01' ) );
-        const arrThisDate = /(\d{4})(\d{2})(\d{2})/.exec( strThisDate );
-        setCalObj({
+    const nextMonth = () => {                        
+        const date  =   new Date( calObj.year , calObj.month , 1 );        
+        const yyyy  =   date.getFullYear();
+        const mon   =   date.getMonth()+1 >= 10 ? date.getMonth()+1 : `0${date.getMonth()+1}`;
+        const day   =   date.getDate() >= 10 ? date.getDate() : "0"+date.getDate();
+       setCalObj({
             ...calObj
-            ,thisDate   : arrThisDate[0]
-            ,year       : arrThisDate[1]
-            ,month      : arrThisDate[2]
-            ,day        : arrThisDate[3]
-        })
+            ,thisDate   : `${yyyy}${mon}${day}`
+            ,year       : yyyy
+            ,month      : mon
+            ,day        : day
+       })
     }
 
     const prevMonth = () => {
         const strYear  = (calObj.month-1) * 1 === 0 ? calObj.year-1 : calObj.year;
         let strMonth = (calObj.month-1) * 1 === 0 ? 12 : (calObj.month-1)
-        strMonth < 10 &&  ( strMonth = "0"+strMonth );
+        strMonth < 10 &&  ( strMonth = `0${strMonth}` );
         setCalObj({
             ...calObj
-            ,thisDate   : strYear+""+strMonth+"01"
+            ,thisDate   : `${strYear}${strMonth}01`
             ,year       : strYear
             ,month      : strMonth
             ,day        : "01"
@@ -42,7 +44,8 @@ const Calendar = props => {
     return(
         <>
             {props.children}<br/>
-            <a href={href} onClick={ ()=> prevMonth() }>&lt;</a>&nbsp;&nbsp; {calObj.year} / {calObj.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> nextMonth() }>&gt;</a>            
+            <a href={href} onClick={ ()=> prevMonth() }>&lt;</a>&nbsp;&nbsp; {calObj.year} / {calObj.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> nextMonth() }>&gt;</a>
+            <CalendarBody year={calObj.year} month={calObj.month} day={calObj.day} date={calObj.thisDate}></CalendarBody>
         </>
     )
 }
