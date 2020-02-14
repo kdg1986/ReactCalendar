@@ -45,7 +45,7 @@ const Calendar = props => {
         <>
             {props.children}<br/>
             <a href={href} onClick={ ()=> prevMonth() }>&lt;</a>&nbsp;&nbsp; {calObj.year} / {calObj.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> nextMonth() }>&gt;</a>
-            <CalendarGenerator year={calObj.year} month={calObj.month} day={calObj.day} date={calObj.thisDate}></CalendarGenerator>
+            <CalendarGenerator year={calObj.year} month={calObj.month} day={calObj.day} date={calObj.thisDate} getValue={props.getValue}></CalendarGenerator>
         </>
     )
 }

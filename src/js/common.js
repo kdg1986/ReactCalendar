@@ -13,7 +13,7 @@ export const getLastDate = (str) => {
 export const dateToString = (str) => {    
     const regExp = /^(\d{4})[.|-|/]*(\d{2})[.|-|/]*(\d{2})$/.exec(str);
     const date = regExp ? new Date( regExp[1],regExp[2],regExp[3] ) : new Date();
-    const mon = (date.getMonth()+1) >= 10 ? (date.getMonth()+1) : "0"+(date.getMonth()+1);
+    const mon = (date.getMonth()) >= 10 ? (date.getMonth()) : "0"+(date.getMonth());
     const day = date.getDate() >= 10 ? date.getDate() : "0"+date.getDate();
     return `${date.getFullYear()}${mon}${day}`
 }
@@ -21,14 +21,15 @@ export const dateToString = (str) => {
 export const genDateList = prp => {
     const firstDay = new Date( `${prp.year}/${prp.month}/01` ).getDay();    
     const lastDay = getLastDate(prp.date);        
-    return  Array(firstDay).fill(null).concat( Array(lastDay).fill(null).map( 
-                (item,idx) => {
-                    return { 
-                        fullDate : `${prp.year}${prp.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
-                        ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+    return Array(firstDay).fill(null).concat( 
+                Array(lastDay).fill(null).map( 
+                    (item,idx) => {
+                        return { 
+                            fullDate : `${prp.year}${prp.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+                            ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+                        }
                     }
-                }
-            )
-        )        
+                )
+            ).reduce( (acc,cur,idx,arr) =>{return acc.concat( [arr.splice(0,7)] )},[])
 }
 
