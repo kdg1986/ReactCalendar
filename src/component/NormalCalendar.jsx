@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {getLastDate} from '../js/common';
 
-
-
-
 const NormalCalendar = props => {
     const getValue = (item) => {        
         if( typeof props.getValue === 'function' ){
@@ -12,6 +9,9 @@ const NormalCalendar = props => {
             console.log( item )
         }
     }
+
+    //console.log( props.list )
+
     return (
         <>
             <table>

@@ -21,15 +21,18 @@ export const dateToString = (str) => {
 export const genDateList = prp => {
     const firstDay = new Date( `${prp.year}/${prp.month}/01` ).getDay();    
     const lastDay = getLastDate(prp.date);        
-    return Array(firstDay).fill(null).concat( 
-                Array(lastDay).fill(null).map( 
-                    (item,idx) => {
-                        return { 
-                            fullDate : `${prp.year}${prp.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
-                            ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
-                        }
+    const obj =
+        Array(firstDay).fill(null).concat( 
+            Array(lastDay).fill(null).map( 
+                (item,idx) => {
+                    return { 
+                        fullDate : `${prp.year}${prp.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+                        ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
                     }
-                )
-            ).reduce( (acc,cur,idx,arr) =>{return acc.concat( [arr.splice(0,7)] )},[])
+                }
+            )
+        )    
+    return Array(6).fill(null).reduce( (acc,cur,idx,arr) =>{return acc.concat( [obj.splice(0,7)] )},[]);
 }
+
 
