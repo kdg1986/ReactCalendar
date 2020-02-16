@@ -18,20 +18,34 @@ export const dateToString = (str) => {
     return `${date.getFullYear()}${mon}${day}`
 }
 
-export const genDateList = prp => {
-    const firstDay = new Date( `${prp.year}/${prp.month}/01` ).getDay();    
-    const lastDay = getLastDate(prp.date);        
+export const genDateList = prop => {
+    const firstDay = new Date( `${prop.year}/${prop.month}/01` ).getDay();
+    const prvYear  = (prop.month-1) * 1 === 0 ? prop.year-1 : prop.year;
+    const prvMonth = (prop.month-1) * 1 === 0 ? 12 : (prop.month-1)
+    const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-firstDay;
+    const lastDate = getLastDate(prop.date);
+
+    console.log( firstDay )
+
     const obj =
-        Array(firstDay).fill(null).concat( 
-            Array(lastDay).fill(null).map( 
+        Array(firstDay).fill(null).map( (item,idx) => {
+            return{
+                fullDate : `${prvYear}${prvMonth}${prvMonStDt + (idx+1)}`
+                ,date : `${prvMonStDt + (idx+1)}`
+                ,color : 'grey'
+
+            }
+        }).concat( 
+            Array(lastDate).fill(null).map( 
                 (item,idx) => {
                     return { 
-                        fullDate : `${prp.year}${prp.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+                        fullDate : `${prop.year}${prop.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
                         ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
                     }
                 }
             )
         )    
+        
     return Array(6).fill(null).reduce( (acc,cur,idx,arr) =>{return acc.concat( [obj.splice(0,7)] )},[]);
 }
 
