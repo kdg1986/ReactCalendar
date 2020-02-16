@@ -22,25 +22,31 @@ export const genDateList = prop => {
     const firstDay = new Date( `${prop.year}/${prop.month}/01` ).getDay();
     const prvYear  = (prop.month-1) * 1 === 0 ? prop.year-1 : prop.year;
     const prvMonth = (prop.month-1) * 1 === 0 ? 12 : (prop.month-1)
-    const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-firstDay;
+    const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-( firstDay ===  0 ? 7 : firstDay );
     const lastDate = getLastDate(prop.date);
-
-    console.log( firstDay )
-
+    const colorSet = { 0 : "red", 6 : 'blue' }
+    
     const obj =
-        Array(firstDay).fill(null).map( (item,idx) => {
+        Array(firstDay ===  0 ? 7 : firstDay).fill(null).map( (item,idx) => {
+            const day = prvMonStDt + (idx+1);
+            const thisDay = new Date( `${prvYear}/${prvMonth}/${day}` ).getDay();
             return{
-                fullDate : `${prvYear}${prvMonth}${prvMonStDt + (idx+1)}`
+                fullDate : `${prvYear}${prvMonth}${day}`
                 ,date : `${prvMonStDt + (idx+1)}`
+                ,day : thisDay
                 ,color : 'grey'
 
             }
         }).concat( 
             Array(lastDate).fill(null).map( 
                 (item,idx) => {
+                    const day = idx+1 >= 10 ? idx+1 : '0'+(idx+1);
+                    const thisDay = new Date( `${prop.year}/${prop.month}/${day}` ).getDay();
                     return { 
-                        fullDate : `${prop.year}${prop.month}${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
-                        ,date : `${ idx+1 >= 10 ? idx+1 : '0'+(idx+1) }`
+                        fullDate : `${prop.year}${prop.month}${day}`
+                        ,date : `${day}`
+                        ,day : thisDay
+                        ,color : colorSet[thisDay] || 'black'
                     }
                 }
             )
