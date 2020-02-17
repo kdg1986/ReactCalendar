@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import {getLastDate} from '../js/common';
 
 const NormalCalendar = props => {
-    const getValue = (item) => {        
-        if( typeof props.getValue === 'function' ){
-            props.getValue(item.fullDate)
-        }else{
-            console.log( item )
-        }
+    
+    const getValue = (item) => {
+        typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
+        console.log(item)
     }
-
-    //console.log( props.list )
+    
 
     return (
         <>
@@ -26,7 +22,7 @@ const NormalCalendar = props => {
                         <td>토</td>                    
                     </tr>                
                     {props.list.map( (item,idx)=>{ 
-                        return( <tr key={idx}>{item.map((item,idx) => <td key={idx} onClick={ () => getValue(item)}>{item ? item.date : ''}</td> )}</tr> ) 
+                        return( <tr key={idx}>{item.map((item,idx) => <td style={{ color : item.color, cursor : 'pointer' }} key={idx} onClick={ () => getValue(item)}>{item ? item.date : ''}</td> )}</tr> ) 
                     })} 
                 </tbody>
             </table>

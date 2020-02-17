@@ -8,8 +8,9 @@ const getDate = (date) => {
 
 ReactDOM.render(
     <>
-        <Calendar date="20200101" getValue={getDate}></Calendar>
-        {/* <Calendar date="20200203" getValue={getDate}></Calendar>
+        <Calendar date="20200101" ></Calendar>
+        <Calendar date="20200203" ></Calendar>
+        {/* 
         <Calendar date="20200303" getValue={getDate}></Calendar>
         <Calendar date="20200403" getValue={getDate}></Calendar> */}
     </>
