@@ -4,6 +4,7 @@ const dateWrapper = (str) => {
     return new Date( strArr[1], strArr[2], strArr[3] );
 }
 
+
 export const getLastDate = (str) => {    
     const date = dateWrapper(str);
     date.setDate(0);
@@ -18,22 +19,28 @@ export const dateToString = (str) => {
     return `${date.getFullYear()}${mon}${day}`
 }
 
-export const genDateList = prop => {
-    const firstDay = new Date( `${prop.year}/${prop.month}/01` ).getDay();
-    const prvYear  = (prop.month-1) * 1 === 0 ? prop.year-1 : prop.year;
-    const prvMonth = (prop.month-1) * 1 === 0 ? 12 : (prop.month-1)
-    const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-( firstDay ===  0 ? 7 : firstDay );
+export const selectMonDateList = prop => {
+    const pDate = new Date( `${prop.year}/${prop.month}/01` ).getDay();
+    const firstDay = pDate ===  0 ? 7 : pDate;
     const lastDate = getLastDate(prop.date);
     const colorSet = { 0 : "red", 6 : 'blue' }
+    const listCount = 42;
+
+    const prvYear  = (prop.month-1) * 1 === 0 ? prop.year-1 : prop.year;
+    const prvMonth = (prop.month-1) * 1 === 0 ? 12 : (prop.month-1)
+    const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-( firstDay );
     
+    const nextBaseDate  =   new Date( prop.year , prop.year , 1 );        
+    const nextYear      =   nextBaseDate.getFullYear();
+    const nextMonth     =   nextBaseDate.getMonth()+1 >= 10 ? nextBaseDate.getMonth()+1 : `0${nextBaseDate.getMonth()+1}`;
     const obj =
-        Array(firstDay ===  0 ? 7 : firstDay).fill(null).map( (item,idx) => {
+        Array(firstDay).fill(null).map( (item,idx) => {
             const day = prvMonStDt + (idx+1);
-            const thisDay = new Date( `${prvYear}/${prvMonth}/${day}` ).getDay();
+            //const thisDay = new Date( `${prvYear}/${prvMonth}/${day}` ).getDay();
             return{
                 fullDate : `${prvYear}${prvMonth}${day}`
                 ,date : `${prvMonStDt + (idx+1)}`
-                ,day : thisDay
+                //,day : thisDay
                 ,color : 'grey'
 
             }
@@ -50,7 +57,18 @@ export const genDateList = prop => {
                     }
                 }
             )
-        )    
+        ).concat(
+            Array(listCount-lastDate).fill(null).map(
+                (item,idx) => {
+                    const day = idx+1 >= 10 ? idx+1 : '0'+(idx+1);
+                    return { 
+                        fullDate : `${nextYear}${nextMonth}${day}`
+                        ,date : `${day}`
+                        ,color : 'grey'
+                    }
+                }
+            )
+        ) 
         
     return Array(6).fill(null).reduce( (acc,cur,idx,arr) =>{return acc.concat( [obj.splice(0,7)] )},[]);
 }

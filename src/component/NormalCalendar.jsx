@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import {getLastDate} from '../js/common';
 
 const NormalCalendar = props => {
-    const getValue = (item) => {        
-        if( typeof props.getValue === 'function' ){
-            props.getValue(item.fullDate)
-        }else{
-            console.log( item )
-        }
-    }
-
     
-    //console.log( props.list )
+    const getValue = (item) => {
+        typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
+        console.log(item)
+    }
+    
 
     return (
         <>
