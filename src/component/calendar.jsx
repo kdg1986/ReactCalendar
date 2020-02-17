@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {dateToString} from '../js/common';
+import {dateToString,lpad} from '../js/common';
 import CalendarGenerator from '../component/CalendarGenerator';
 
 const Calendar = props => {
@@ -16,8 +16,8 @@ const Calendar = props => {
     const nextMonth = () => {                        
         const date  =   new Date( calObj.year , calObj.month , 1 );        
         const yyyy  =   date.getFullYear();
-        const mon   =   date.getMonth()+1 >= 10 ? date.getMonth()+1 : `0${date.getMonth()+1}`;
-        const day   =   date.getDate() >= 10 ? date.getDate() : "0"+date.getDate();
+        const mon   =   lpad( date.getMonth()+1 )
+        const day   =   lpad( date.getDate() )
        setCalObj({
             ...calObj
             ,thisDate   : `${yyyy}${mon}${day}`
@@ -28,9 +28,8 @@ const Calendar = props => {
     }
 
     const prevMonth = () => {
-        const strYear  = (calObj.month-1) * 1 === 0 ? calObj.year-1 : calObj.year;
-        let strMonth = (calObj.month-1) * 1 === 0 ? 12 : (calObj.month-1)
-        strMonth < 10 &&  ( strMonth = `0${strMonth}` );
+        const strYear  = lpad( (calObj.month-1) * 1 === 0 ? calObj.year-1 : calObj.year );
+        const strMonth = lpad( (calObj.month-1) * 1 === 0 ? 12 : (calObj.month-1) );        
         setCalObj({
             ...calObj
             ,thisDate   : `${strYear}${strMonth}01`

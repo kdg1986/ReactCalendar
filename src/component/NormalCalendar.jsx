@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {getLastDate} from '../js/common';
 
 const NormalCalendar = props => {
     
@@ -23,7 +22,7 @@ const NormalCalendar = props => {
                         <td>토</td>                    
                     </tr>                
                     {props.list.map( (item,idx)=>{ 
-                        return( <tr key={idx}>{item.map((item,idx) => <td style={{ color : item.color }} key={idx} onClick={ () => getValue(item)}>{item ? item.date : ''}</td> )}</tr> ) 
+                        return( <tr key={idx}>{item.map((item,idx) => <td style={{ color : item.color, cursor : 'pointer' }} key={idx} onClick={ () => getValue(item)}>{item ? item.date : ''}</td> )}</tr> ) 
                     })} 
                 </tbody>
             </table>

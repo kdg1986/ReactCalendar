@@ -4,6 +4,8 @@ const dateWrapper = (str) => {
     return new Date( strArr[1], strArr[2], strArr[3] );
 }
 
+export const lpad = (str) =>  /^[0-9]$/.exec(str) ? String(str).replace( /^([0-9])$/, `0$1` ) : String(str);
+
 
 export const getLastDate = (str) => {    
     const date = dateWrapper(str);
@@ -14,8 +16,8 @@ export const getLastDate = (str) => {
 export const dateToString = (str) => {    
     const regExp = /^(\d{4})[.|-|/]*(\d{2})[.|-|/]*(\d{2})$/.exec(str);
     const date = regExp ? new Date( regExp[1],regExp[2],regExp[3] ) : new Date();
-    const mon = (date.getMonth()) >= 10 ? (date.getMonth()) : "0"+(date.getMonth());
-    const day = date.getDate() >= 10 ? date.getDate() : "0"+date.getDate();
+    const mon =  lpad( date.getMonth() );
+    const day =  lpad( date.getDate() );
     return `${date.getFullYear()}${mon}${day}`
 }
 
@@ -27,12 +29,13 @@ export const selectMonDateList = prop => {
     const listCount = 42;
 
     const prvYear  = (prop.month-1) * 1 === 0 ? prop.year-1 : prop.year;
-    const prvMonth = (prop.month-1) * 1 === 0 ? 12 : (prop.month-1)
+    const prvMonth = lpad( (prop.month-1) * 1 === 0 ? 12 : (prop.month-1) );
     const prvMonStDt = new Date(  prvYear, prvMonth ,'0' ).getDate()-( firstDay );
     
-    const nextBaseDate  =   new Date( prop.year , prop.year , 1 );        
+    const nextBaseDate  =   new Date( prop.year , prop.month , 1 );        
     const nextYear      =   nextBaseDate.getFullYear();
-    const nextMonth     =   nextBaseDate.getMonth()+1 >= 10 ? nextBaseDate.getMonth()+1 : `0${nextBaseDate.getMonth()+1}`;
+    const nextMonth     =   lpad( nextBaseDate.getMonth()+1 );
+
     const obj =
         Array(firstDay).fill(null).map( (item,idx) => {
             const day = prvMonStDt + (idx+1);
@@ -47,7 +50,7 @@ export const selectMonDateList = prop => {
         }).concat( 
             Array(lastDate).fill(null).map( 
                 (item,idx) => {
-                    const day = idx+1 >= 10 ? idx+1 : '0'+(idx+1);
+                    const day = lpad( idx+1 );
                     const thisDay = new Date( `${prop.year}/${prop.month}/${day}` ).getDay();
                     return { 
                         fullDate : `${prop.year}${prop.month}${day}`
@@ -60,7 +63,7 @@ export const selectMonDateList = prop => {
         ).concat(
             Array(listCount-lastDate).fill(null).map(
                 (item,idx) => {
-                    const day = idx+1 >= 10 ? idx+1 : '0'+(idx+1);
+                    const day = lpad( idx+1 );
                     return { 
                         fullDate : `${nextYear}${nextMonth}${day}`
                         ,date : `${day}`
