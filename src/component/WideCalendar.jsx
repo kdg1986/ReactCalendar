@@ -3,7 +3,7 @@ import '../css/common.css';
 
 const WideCalendar = props => {
     props = { ...props.data }
-
+    const href = '#';
     const getValue = (item) => {
         typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
         console.log(item)
@@ -11,7 +11,7 @@ const WideCalendar = props => {
     
     return (
         <>
-                <a href='#' onClick={ ()=> props.prevMonth() }>&lt;</a>&nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;<a href="#" onClick={ ()=> props.nextMonth() }>&gt;</a>
+                <a href={href} onClick={ ()=> props.prevMonth() }>&lt;</a>&nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> props.nextMonth() }>&gt;</a>
                 <table className="table">
                     <tbody>
                         <tr>
