@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {dateToString,lpad} from '../js/common';
-import CalendarGenerator from '../component/CalendarGenerator';
+import CalendarWarpper from './CalendarWarpper';
 
 const Calendar = props => {
     const arrPrpDate =  /^(\d{4})[.|-|/]*(\d{2})[.|-|/]*(\d{2})$/.exec( dateToString(props.date) );    
@@ -11,41 +11,42 @@ const Calendar = props => {
         ,month      : arrPrpDate[2]
         ,day        : arrPrpDate[3]
         ,defaultDaySelect : props.daySelect || false
+        ,type : props.daySelect || 'input'
     });
-
-    const nextMonth = () => {                        
-        const date  =   new Date( calObj.year , calObj.month , 1 );        
-        const yyyy  =   date.getFullYear();
-        const mon   =   lpad( date.getMonth()+1 )
-        const day   =   lpad( date.getDate() )
-       setCalObj({
-            ...calObj
-            ,thisDate   : `${yyyy}${mon}${day}`
-            ,year       : yyyy
-            ,month      : mon
-            ,day        : day
-       })
-    }
-
-    const prevMonth = () => {
-        const strYear  = lpad( (calObj.month-1) * 1 === 0 ? calObj.year-1 : calObj.year );
-        const strMonth = lpad( (calObj.month-1) * 1 === 0 ? 12 : (calObj.month-1) );        
-        setCalObj({
-            ...calObj
-            ,thisDate   : `${strYear}${strMonth}01`
-            ,year       : strYear
-            ,month      : strMonth
-            ,day        : "01"
-        })
+    const functions = {
+        nextMonth : () => {                        
+            const date  =   new Date( calObj.year , calObj.month , 1 );        
+            const yyyy  =   date.getFullYear();
+            const mon   =   lpad( date.getMonth()+1 )
+            const day   =   lpad( date.getDate() )
+           setCalObj({
+                ...calObj
+                ,thisDate   : `${yyyy}${mon}${day}`
+                ,year       : yyyy
+                ,month      : mon
+                ,day        : day
+           })
+        }
+        ,prevMonth : () => {
+            const strYear  = lpad( (calObj.month-1) * 1 === 0 ? calObj.year-1 : calObj.year );
+            const strMonth = lpad( (calObj.month-1) * 1 === 0 ? 12 : (calObj.month-1) );        
+            setCalObj({
+                ...calObj
+                ,thisDate   : `${strYear}${strMonth}01`
+                ,year       : strYear
+                ,month      : strMonth
+                ,day        : "01"
+            })
+        }
     }
     
+
+    
+    
+    {/* <a href={href} onClick={ ()=> prevMonth() }>&lt;</a>&nbsp;&nbsp; {calObj.year} / {calObj.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> nextMonth() }>&gt;</a> */}
     
     return(
-        <>
-            {props.children}<br/>
-            <a href={href} onClick={ ()=> prevMonth() }>&lt;</a>&nbsp;&nbsp; {calObj.year} / {calObj.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> nextMonth() }>&gt;</a>
-            <CalendarGenerator year={calObj.year} month={calObj.month} day={calObj.day} date={calObj.thisDate} getValue={props.getValue}></CalendarGenerator>
-        </>
+        <CalendarWarpper initObj={ {...calObj, ...props, ...functions} }></CalendarWarpper>        
     )
 }
 
