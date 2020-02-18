@@ -4,9 +4,9 @@ import '../css/common.css';
 const WideCalendar = props => {
     props = { ...props.data }
     const href = '#';
-    const getValue = (item) => {
+    const selectDate = (item) => {
+        props.selectDate(item);
         typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
-        console.log(item)
     }
     
     return (
@@ -29,7 +29,7 @@ const WideCalendar = props => {
                             {
                                 item.map(
                                     (item,idx) => 
-                                        <td className={'cellProperty today '+item.color} key={idx} onClick={ () => getValue(item)}>
+                                        <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } key={idx} onClick={ () => selectDate(item)}>
                                             <div>{item ? item.date : ''}</div>
                                         </td> 
                                 )

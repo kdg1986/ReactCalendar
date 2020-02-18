@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Calendar from './component'
 
 const getDate = (date) => {
-    alert(`==>  ${date}`)
+    console.log(`==>  ${date}`)
 }
 
 ReactDOM.render(
