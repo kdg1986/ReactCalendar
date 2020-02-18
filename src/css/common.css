@@ -1,0 +1,12 @@
+.table { width: 100%; border:1px solid gray; border-collapse: collapse; }
+.table tr{ border-spacing: 1px; }
+.table td{ height: 130px; border:1px solid gray; }
+.table td div{ margin-bottom: 90px; text-align: right; margin-right: 10px; }
+
+.today { background-color: beige; }
+
+.cellProperty { cursor: pointer; }
+.red { color: red;  font-weight: bold;}
+.blue { color: blue; font-weight: bold;}
+.gray { color: gray; }
+.black { font-weight: bold; }

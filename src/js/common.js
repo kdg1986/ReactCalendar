@@ -44,7 +44,7 @@ export const selectMonDateList = prop => {
                 fullDate : `${prvYear}${prvMonth}${day}`
                 ,date : `${prvMonStDt + (idx+1)}`
                 //,day : thisDay
-                ,color : 'grey'
+                ,color : 'gray'
 
             }
         }).concat( 
@@ -67,7 +67,7 @@ export const selectMonDateList = prop => {
                     return { 
                         fullDate : `${nextYear}${nextMonth}${day}`
                         ,date : `${day}`
-                        ,color : 'grey'
+                        ,color : 'gray'
                     }
                 }
             )
