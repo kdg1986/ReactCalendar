@@ -35,6 +35,25 @@ const CalendarWarpper = props => {
                 ,dateList   : selectMonDateList(`${strYear}${strMonth}01`)
             })
         }
+        ,selectDate : (date) => {
+            setState({
+                ...state                
+                ,dateList   : state.dateList.map( item =>   
+                    item.map(item => { return {...item, selected : item.fullDate === date.fullDate }  } ) 
+                )
+            })
+        }
+        ,dargDate : (date) => {
+            setState({
+                ...state                
+                ,dateList   : state.dateList.map( item =>
+                    item.map(item => { 
+                        item.fullDate === date.fullDate && ( item.selected = !item.selected  )
+                        return {...item}
+                    }) 
+                )
+            })
+        }
     }
 
     const renderObj = { ...state, ...functions }

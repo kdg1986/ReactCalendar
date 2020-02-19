@@ -4,11 +4,16 @@ import '../css/common.css';
 const WideCalendar = props => {
     props = { ...props.data }
     const href = '#';
-    const getValue = (item) => {
+    const selectDate = (item) => {
+        props.selectDate(item);
         typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
-        console.log(item)
     }
-    
+
+    const drag = (date) => {
+        
+        props.dargDate(date)
+    }
+        
     return (
         <>
                 <a href={href} onClick={ ()=> props.prevMonth() }>&lt;</a>&nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> props.nextMonth() }>&gt;</a>
@@ -29,7 +34,11 @@ const WideCalendar = props => {
                             {
                                 item.map(
                                     (item,idx) => 
-                                        <td className={'cellProperty today '+item.color} key={idx} onClick={ () => getValue(item)}>
+                                        <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } key={idx} 
+                                        draggable={props.drag}
+                                        onClick={ () => selectDate(item)}
+                                        onDragLeave={()=> props.drag && drag(item)}
+                                        >
                                             <div>{item ? item.date : ''}</div>
                                         </td> 
                                 )
