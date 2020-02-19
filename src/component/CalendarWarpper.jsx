@@ -43,6 +43,17 @@ const CalendarWarpper = props => {
                 )
             })
         }
+        ,dargDate : (date) => {
+            setState({
+                ...state                
+                ,dateList   : state.dateList.map( item =>
+                    item.map(item => { 
+                        item.fullDate === date.fullDate && ( item.selected = !item.selected  )
+                        return {...item}
+                    }) 
+                )
+            })
+        }
     }
 
     const renderObj = { ...state, ...functions }

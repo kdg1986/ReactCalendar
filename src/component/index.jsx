@@ -11,7 +11,8 @@ const Calendar = props => {
         ,month      : arrPrpDate[2]
         ,day        : arrPrpDate[3]
         ,defaultDaySelect : props.daySelect || false
-        ,type : props.type || 'input'                
+        ,type : props.type || 'input'
+        ,drag : props.drag || false
     }
     return( 
        <CalendarWarpper initObj={init}></CalendarWarpper>
