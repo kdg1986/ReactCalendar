@@ -2,6 +2,7 @@ import React,{ useState } from 'react';
 import WideCalendar from './WideCalendar';
 import InputCalendar from './InputCalendar';
 import {selectMonDateList,lpad} from '../js/common';
+import Popup from './Popup';
 
 const CalendarWarpper = props => {
     
@@ -60,8 +61,10 @@ const CalendarWarpper = props => {
 
     return (
         <>
+            
            { type === 'wide'    && <WideCalendar data={renderObj}></WideCalendar> }
            { type === 'input'   && <InputCalendar data={renderObj}></InputCalendar> }
+           <Popup trigger={ <button>테스트</button> }></Popup>
         </>
     )
 }
