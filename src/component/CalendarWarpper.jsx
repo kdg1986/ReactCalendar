@@ -2,13 +2,13 @@ import React,{ useState } from 'react';
 import WideCalendar from './WideCalendar';
 import InputCalendar from './InputCalendar';
 import {selectMonDateList,lpad} from '../js/common';
-import Popup from './Popup';
+
 
 const CalendarWarpper = props => {
     
-    const { type,date } = props.initObj;
+    const { type,date,popup } = props.initObj;
     props.initObj.dateList = selectMonDateList(date);
-    const [ state , setState ] = useState({ ...props.initObj });
+    const [ state , setState ] = useState({ ...props.initObj });    
     const functions = {
         nextMonth : () => {                        
             const date  =   new Date( state.year , state.month , 1 );
@@ -36,15 +36,17 @@ const CalendarWarpper = props => {
                 ,dateList   : selectMonDateList(`${strYear}${strMonth}01`)
             })
         }
-        ,selectDate : (date) => {
+        ,selectDate : (date) => {            
             setState({
-                ...state                
+                ...state
+                ,isOpen     : true
+                ,selectData : date
                 ,dateList   : state.dateList.map( item =>   
                     item.map(item => { return {...item, selected : item.fullDate === date.fullDate }  } ) 
                 )
-            })
+            })            
         }
-        ,dargDate : (date) => {
+        ,dragDate : (date) => {
             setState({
                 ...state                
                 ,dateList   : state.dateList.map( item =>
@@ -55,16 +57,31 @@ const CalendarWarpper = props => {
                 )
             })
         }
+        ,closePopup : (date) => {
+            setState({
+                ...state
+                ,selectData : ''
+                ,isOpen     : false
+                ,dateList   : state.dateList.map( item =>
+                    item.map(item => { 
+                        item.fullDate === date.fullDate && ( item.selected = !item.selected  )
+                        return {...item}
+                    }) 
+                )
+            })
+        }
+        
     }
 
     const renderObj = { ...state, ...functions }
 
     return (
         <>
-            
            { type === 'wide'    && <WideCalendar data={renderObj}></WideCalendar> }
            { type === 'input'   && <InputCalendar data={renderObj}></InputCalendar> }
-           <Popup trigger={ <button>테스트</button> }></Popup>
+           {/* <Popup ref={(ref) =>  popupHandler = ref }></Popup>  */}
+
+           {/* <button onClick={ () => console.log( functions ) }>테스트</button> */}
         </>
     )
 }

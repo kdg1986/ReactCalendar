@@ -1,43 +1,23 @@
-import React from 'react';
+import React,{Component} from 'react';
+import '../css/popup.css';
 
-export const Popup = props => {    
-    const innerOpen = () => {
-        console.log('open');
-    }
+class Popup extends Component {
+    state = { isOpen : true }
 
-     {/* <div className="dim-layer">
-            <div className="dimBg"></div>
-            <div id="layer2" class="pop-layer">
-                <div class="pop-container">
-                    <div class="pop-conts">
-                        <!--content //-->
-                        <p class="ctxt mb20">Thank you.<br>
-                            Your registration was submitted successfully.<br>
-                            Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
-                            Hope to see you soon!
-                        </p>
-
-                        <div class="btn-r">
-                            <a href="#" class="btn-layerClose">Close</a>
-                        </div>
-                        <!--// content-->
-                    </div>
-                </div>
-            </div> 
-        </div> */}
-
-        /* React.cloneElement(trigger(isOpen), triggerProps); */
-        console.log(    )
-        console.log(  props.trigger )
-        
-        
-
-    return(
-        <>
-            {React.cloneElement( props.trigger , { onClick : () => innerOpen() }  )}
+    render() {        
+      return (
+        <>            
+            <div className={this.state.isOpen ? "dim open" : "dim close" }>
+                <div>
+                    <div>
+                        <button type="button">저장</button>
+                        <button type="button" onClick={()=>{ this.props.close(this.props.data) }}>닫기</button>
+                    </div>    
+                </div>        
+            </div>
         </>
-       
-    )
-}
+      )
 
-export default Popup;
+    }
+  }
+  export default Popup;
