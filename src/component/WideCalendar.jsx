@@ -2,37 +2,30 @@ import React from 'react';
 import '../css/common.css';
 import nextImg from '../img/nextArrow.png';
 import prevImg from '../img/prevArrow.png';
-import { render } from '@testing-library/react';
+import Popup from './Popup';
 
-const WideCalendar = props => {
-    props = { ...props.data }
+
+const WideCalendar = ({data}) => {
+    const props = data;
     
     const selectDate = (item) => {
         props.selectDate(item);
-        typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
+        //typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
     }
-
     const drag = (date) => {        
-        props.dargDate(date)
+        props.dragDate(date)
     }
-
-    const imgSize = {
-        width : '22px'
-        ,height: '22px'
+    const close = (selectData) => {
+        props.closePopup(selectData);
     }
     return (
         <>
-                <div style={{ paddingLeft :  '42%' , fontSize : 30 }}>
-                    <button style={{ outline : 0, border : 0 }} type="button" onClick={ ()=> props.prevMonth() }>
-                        <img src={prevImg} style={imgSize}></img>
-                    </button>
+                <div style={{ textAlign : 'center', fontSize : '30px' }}>                    
+                    <button className="prevImg"  type="button" onClick={ ()=> props.prevMonth() }></button>
                     &nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;
-                    <button style={{ outline : 0, border : 0 }} type="button" onClick={ ()=> props.nextMonth() }>
-                        <img src={nextImg} style={imgSize}></img>
-                    </button>
+                    <button className="nextImg"  type="button" onClick={ ()=> props.nextMonth() }></button>
                 </div>
                 
-
                 <table className="table">
                     <tbody>
                         <tr>
@@ -50,13 +43,13 @@ const WideCalendar = props => {
                             {
                                 item.map(
                                     (item,idx) => 
-                                        <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } key={idx} 
-                                        draggable={props.drag}
-                                        onDragLeave={()=> props.drag && drag(item)}
-                                        onClick={ () => selectDate(item)}
-                                        
+                                        <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } 
+                                            key={idx} 
+                                            draggable={props.drag}
+                                            onDragLeave={()=> props.drag && drag(item)}
+                                            onClick={ () => selectDate(item)}                                        
                                         >
-                                            <div>{item ? item.date : ''}</div>
+                                            <p>{item ? item.date : ''}</p>                                            
                                         </td> 
                                 )
                             }                        
@@ -64,8 +57,8 @@ const WideCalendar = props => {
                             ) 
                         })} 
                     </tbody>
-                </table>
-            
+                </table> 
+                { props.isOpen && <Popup close={close} data={props.selectData}></Popup> }
         </>
     )
 }

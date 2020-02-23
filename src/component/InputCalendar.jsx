@@ -8,6 +8,7 @@ const InputCalendar = props => {
         console.log(item)
     }
     
+
     return (
         <>
                 <a href={href} onClick={ ()=> props.prevMonth() }>&lt;</a>&nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;<a href={href} onClick={ ()=> props.nextMonth() }>&gt;</a>
@@ -38,6 +39,7 @@ const InputCalendar = props => {
                         })} 
                     </tbody>
                 </table>
+                
             
         </>
     )
