@@ -12,31 +12,18 @@ const WideCalendar = ({data}) => {
         props.selectDate(item);
         //typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
     }
-
     const drag = (date) => {        
         props.dragDate(date)
     }
-
     const close = (selectData) => {
         props.closePopup(selectData);
     }
-
-    const imgSize = {
-        width : '22px'
-        ,height: '22px'
-    }
-    
-
     return (
         <>
-                <div style={{ paddingLeft :  '42%' , fontSize : 30 }}>
-                    <button style={{ outline : 0, border : 0 }} type="button" onClick={ ()=> props.prevMonth() }>
-                        <img src={prevImg} style={imgSize}></img>
-                    </button>
+                <div style={{ textAlign : 'center', fontSize : '30px' }}>                    
+                    <button className="prevImg"  type="button" onClick={ ()=> props.prevMonth() }></button>
                     &nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;
-                    <button style={{ outline : 0, border : 0 }} type="button" onClick={ ()=> props.nextMonth() }>
-                        <img src={nextImg} style={imgSize}></img>
-                    </button>
+                    <button className="nextImg"  type="button" onClick={ ()=> props.nextMonth() }></button>
                 </div>
                 
                 <table className="table">
@@ -62,7 +49,7 @@ const WideCalendar = ({data}) => {
                                             onDragLeave={()=> props.drag && drag(item)}
                                             onClick={ () => selectDate(item)}                                        
                                         >
-                                            <div className="date">{item ? item.date : ''}</div>                                            
+                                            <p>{item ? item.date : ''}</p>                                            
                                         </td> 
                                 )
                             }                        

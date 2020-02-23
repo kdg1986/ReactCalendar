@@ -78,7 +78,7 @@ const CalendarWarpper = props => {
     return (
         <>
            { type === 'wide'    && <WideCalendar data={renderObj}></WideCalendar> }
-           { type === 'input'   && <InputCalendar data={renderObj}></InputCalendar> }
+           { type === 'input'   && <InputCalendar data={renderObj}></InputCalendar> }           
            {/* <Popup ref={(ref) =>  popupHandler = ref }></Popup>  */}
 
            {/* <button onClick={ () => console.log( functions ) }>테스트</button> */}

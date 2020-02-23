@@ -45,7 +45,7 @@ export const selectMonDateList = str => {
     const obj =
         Array(firstDay).fill(null).map( (item,idx) => {
             const day = prvMonStDt + (idx+1);
-            //const thisDay = new Date( `${prvYear}/${prvMonth}/${day}` ).getDay();
+            const thisDay = new Date( `${prvYear}/${prvMonth}/${day}` ).getDay();
             return{
                 fullDate : `${prvYear}${prvMonth}${day}`
                 ,date : `${prvMonStDt + (idx+1)}`
@@ -80,7 +80,6 @@ export const selectMonDateList = str => {
                 }
             )
         ) 
-        
     return Array(6).fill(null).reduce( (acc,cur,idx,arr) =>{return acc.concat( [obj.splice(0,7)] )},[]);
 }
 

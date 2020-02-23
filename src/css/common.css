@@ -1,6 +1,10 @@
 .table { width: 100%; border:1px solid gray; border-collapse: collapse; }
 .table tr{ border-spacing: 1px; }
-.table td{ height: 130px; border:1px solid gray;  }
+
+.table td{ height: 130px; width: 14%; border:1px solid gray;  vertical-align: top; }
+.table td p{ /* position: absolute; top: 0; right: 10px; */ margin: 0;  text-align: right; padding-right: 10px;}
+
+
 .table td .date{ margin-bottom: 90px; text-align: right; margin-right: 10px; }
 
 .today { background-color: beige; }
@@ -11,3 +15,21 @@
 .gray { color: gray; font-size: 20px}
 .black { font-weight: bold; font-size: 20px}
 
+
+.prevImg {
+    background-image: url('../img/prevArrow.png'); 
+    background-size: cover;
+    border: 0;
+    background-color: white;
+    width: 25px;   
+    height: 25px;
+}
+
+.nextImg {
+    background-image: url('../img/nextArrow.png'); 
+    background-size: cover;
+    border: 0;
+    background-color: white;
+    width: 25px;   
+    height: 25px;
+}
