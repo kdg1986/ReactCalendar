@@ -6,7 +6,24 @@
     top: 0;
     left: 0;
     display: none;
+    background-color: rgba(0,0,0,0.6);
+    
 }
 
 .dim.open { display: block;}    
 .dim.close { display: none;}
+
+.btnArea {
+    text-align: center;
+    line-height: 40px;
+}  
+.btnArea button{
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 15px;
+    background-color: gray;
+    color: white;
+    border: 0;
+    margin: 10px;
+}
