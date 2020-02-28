@@ -6,7 +6,7 @@ import {selectMonDateList,lpad} from '../js/common';
 
 const CalendarWarpper = props => {
     
-    const { type,date,popup } = props.initObj;
+    const { type,date } = props.initObj;
     props.initObj.dateList = selectMonDateList(date);
     const [ state , setState ] = useState({ ...props.initObj });    
     const functions = {
@@ -41,9 +41,9 @@ const CalendarWarpper = props => {
                 ...state
                 ,isOpen     : true
                 ,selectData : date
-                ,dateList   : state.dateList.map( item =>   
-                    item.map(item => { return {...item, selected : item.fullDate === date.fullDate }  } ) 
-                )
+                /* ,dateList   : state.dateList.map( item =>   
+                    item.map(item => { return {...item , selected : item.fullDate === date.fullDate }  } ) 
+                ) */
             })            
         }
         ,dragDate : (date) => {
@@ -62,15 +62,27 @@ const CalendarWarpper = props => {
                 ...state
                 ,selectData : ''
                 ,isOpen     : false
-                ,dateList   : state.dateList.map( item =>
+                /* ,dateList   : state.dateList.map( item =>
                     item.map(item => { 
                         item.fullDate === date.fullDate && ( item.selected = !item.selected  )
+                        return {...item}
+                    }) 
+                ) */
+            })
+        }
+        ,saveSchdule : (data) => {
+            setState({
+                ...state
+                ,selectData : ''
+                ,isOpen     : false
+                ,dateList   : state.dateList.map( item =>
+                    item.map(item => { 
+                        item.fullDate === data.fullDate && ( item.isSchedule = true  ) && ( item.content = data.content  )                        
                         return {...item}
                     }) 
                 )
             })
         }
-        
     }
 
     const renderObj = { ...state, ...functions }
