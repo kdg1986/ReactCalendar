@@ -1,9 +1,6 @@
 import React from 'react';
 import '../css/common.css';
-import nextImg from '../img/nextArrow.png';
-import prevImg from '../img/prevArrow.png';
 import Popup from './Popup';
-
 
 const WideCalendar = ({data}) => {
     const props = data;
@@ -12,12 +9,10 @@ const WideCalendar = ({data}) => {
         props.selectDate(item);
         //typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
     }
-    const drag = (date) => {        
-        props.dragDate(date)
-    }
-    const close = (selectData) => {
-        props.closePopup(selectData);
-    }
+    const drag = (date) => props.dragDate(date)
+    const close = (selectData) => props.closePopup(selectData);
+    const save = (selectData) => props.saveSchdule(selectData);
+
     return (
         <>
                 <div style={{ textAlign : 'center', fontSize : '30px' }}>                    
@@ -46,10 +41,10 @@ const WideCalendar = ({data}) => {
                                         <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } 
                                             key={idx} 
                                             draggable={props.drag}
-                                            onDragLeave={()=> props.drag && drag(item)}
-                                            onClick={ () => selectDate(item)}                                        
+                                            onDragLeave={()=> props.drag && drag(item)}                                            
                                         >
-                                            <p>{item ? item.date : ''}</p>                                            
+                                            <p>{item.isSchedule === false && <button onClick={ () => selectDate(item)}>일정등록</button>}&nbsp;{item ? item.date : ''}</p>
+                                            <span>{item.isSchedule === true && <a onClick={ () => selectDate(item)}>{item.content}</a>}</span>
                                         </td> 
                                 )
                             }                        
@@ -58,7 +53,7 @@ const WideCalendar = ({data}) => {
                         })} 
                     </tbody>
                 </table> 
-                { props.isOpen && <Popup close={close} data={props.selectData}></Popup> }
+                { props.isOpen && <Popup close={close} data={props.selectData} save={(obj)=> save(obj) }></Popup> }
         </>
     )
 }

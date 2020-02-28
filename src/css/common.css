@@ -3,13 +3,14 @@
 
 .table td{ height: 130px; width: 14%; border:1px solid gray;  vertical-align: top; }
 .table td p{ /* position: absolute; top: 0; right: 10px; */ margin: 0;  text-align: right; padding-right: 10px;}
-
+.table td span{ font-size: 12px; margin: 0;  text-align: right; }
+.table td a{  cursor: pointer; }
 
 .table td .date{ margin-bottom: 90px; text-align: right; margin-right: 10px; }
 
 .today { background-color: beige; }
 
-.cellProperty { cursor: pointer; }
+.cellProperty {  }
 .red { color: red;  font-weight: bold; font-size: 20px;}
 .blue { color: blue; font-weight: bold; font-size: 20px}
 .gray { color: gray; font-size: 20px}

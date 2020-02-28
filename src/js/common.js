@@ -50,8 +50,7 @@ export const selectMonDateList = str => {
                 fullDate : `${prvYear}${prvMonth}${day}`
                 ,date : `${prvMonStDt + (idx+1)}`
                 //,day : thisDay
-                ,color : 'gray'
-                ,selected : false
+                ,color : 'gray'                
             }
         }).concat( 
             Array(lastDate).fill(null).map( 
@@ -63,7 +62,7 @@ export const selectMonDateList = str => {
                         ,date : `${day}`
                         ,day : thisDay
                         ,color : colorSet[thisDay] || 'black'
-                        ,selected : false
+                        ,isSchedule : false                        
                     }
                 }
             )
@@ -75,11 +74,13 @@ export const selectMonDateList = str => {
                         fullDate : `${nextYear}${nextMonth}${day}`
                         ,date : `${day}`
                         ,color : 'gray'
-                        ,selected : false
+                        
                     }
                 }
             )
-        ) 
+        ).map( item => {  return { ...item ,selected : false } } )
+        
+        
     return Array(6).fill(null).reduce( (acc,cur,idx,arr) =>{return acc.concat( [obj.splice(0,7)] )},[]);
 }
 
