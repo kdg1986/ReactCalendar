@@ -1,26 +1,32 @@
 import React from 'react';
 import '../css/common.css';
 import Popup from './Popup';
+import * as storeFunc from '../modules';
+import { bindActionCreators } from 'redux';
 
-const WideCalendar = ({data}) => {
-    const props = data;
-    
-    const selectDate = (item) => {
-        props.selectDate(item);
-        //typeof props.getValue === 'function' &&  props.getValue(item.fullDate);
-    }
-    const drag = (date) => props.dragDate(date)
-    const close = (selectData) => props.closePopup(selectData);
-    const save = (selectData) => props.saveSchdule(selectData);
+const WideCalendar = ({data}) => {    
+    const state      = { ...data.calendar }    
+    const { prev, next, save, selectDate, close } = bindActionCreators({ 
+            prev : storeFunc.prev 
+            ,next : storeFunc.next
+            ,save : storeFunc.saveSchdule
+            ,selectDate : storeFunc.selectDate
+            ,close : storeFunc.closePopup
+    }, data.dispatch );
 
+    //const save       = (selectData) => dispatch( storeFunc.saveSchdule(selectData) );
+    //const close      = (selectData) => dispatch( storeFunc.closePopup(selectData) );
+    //const prev       = () => dispatch( storeFunc.prev() );
+    //const next      = () => dispatch( storeFunc.next() );
+    //const selectDate = date => dispatch( storeFunc.selectDate(date) );
     return (
         <>
                 <div style={{ textAlign : 'center', fontSize : '30px' }}>                    
-                    <button className="prevImg"  type="button" onClick={ ()=> props.prevMonth() }></button>
-                    &nbsp;&nbsp; {props.year} / {props.month} &nbsp;&nbsp;
-                    <button className="nextImg"  type="button" onClick={ ()=> props.nextMonth() }></button>
+                    <button className="prevImg"  type="button" onClick={prev}></button>
+                    &nbsp;&nbsp; {state.year} / {state.month} &nbsp;&nbsp;
+                    <button className="nextImg"  type="button" onClick={next}></button>
                 </div>
-                
+
                 <table className="table">
                     <tbody>
                         <tr>
@@ -32,7 +38,7 @@ const WideCalendar = ({data}) => {
                             <th>금</th>
                             <th>토</th> 
                         </tr>                
-                        {props.dateList.map( (item,idx)=>{ 
+                        {state.dateList.map( (item,idx)=>{ 
                             return( 
                             <tr key={idx}>
                             {
@@ -40,8 +46,8 @@ const WideCalendar = ({data}) => {
                                     (item,idx) => 
                                         <td className={'cellProperty '+item.color+' '+(item.selected ? 'today' : '') } 
                                             key={idx} 
-                                            draggable={props.drag}
-                                            onDragLeave={()=> props.drag && drag(item)}                                            
+                                            draggable={state.drag}
+                                            //onDragLeave={()=> state.drag && drag(item)}                                            
                                         >
                                             <p>{item.isSchedule === false && <button onClick={ () => selectDate(item)}>일정등록</button>}&nbsp;{item ? item.date : ''}</p>
                                             <span>{item.isSchedule === true && <a onClick={ () => selectDate(item)}>{item.content}</a>}</span>
@@ -52,8 +58,9 @@ const WideCalendar = ({data}) => {
                             ) 
                         })} 
                     </tbody>
-                </table> 
-                { props.isOpen && <Popup close={close} data={props.selectData} save={(obj)=> save(obj) }></Popup> }
+                </table>
+                { state.isOpen && <Popup close={close} data={state.selectData} save={(obj)=> save(obj) }></Popup> }
+               
         </>
     )
 }
