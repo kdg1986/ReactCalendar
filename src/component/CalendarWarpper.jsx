@@ -14,7 +14,7 @@ const CalendarWarpper = (props) => {
 }
 export default connect(
     state => ({ calendar : state })
-    ,dispatch => ({dispatch})
+    //,dispatch => ({dispatch})
     /* ({
         prev            : () => dispatch(storeFunc.prev())
         ,next           : () => dispatch(storeFunc.next())

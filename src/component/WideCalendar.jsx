@@ -3,16 +3,17 @@ import '../css/common.css';
 import Popup from './Popup';
 import * as storeFunc from '../modules';
 import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 
 const WideCalendar = ({data}) => {    
-    const state      = { ...data.calendar }    
+    const state      = { ...data.calendar }        
     const { prev, next, save, selectDate, close } = bindActionCreators({ 
             prev : storeFunc.prev 
             ,next : storeFunc.next
             ,save : storeFunc.saveSchdule
             ,selectDate : storeFunc.selectDate
             ,close : storeFunc.closePopup
-    }, data.dispatch );
+    }, useDispatch() );
 
     //const save       = (selectData) => dispatch( storeFunc.saveSchdule(selectData) );
     //const close      = (selectData) => dispatch( storeFunc.closePopup(selectData) );
