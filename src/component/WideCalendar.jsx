@@ -18,7 +18,7 @@ const WideCalendar = ({data}) => {
     //const close      = (selectData) => dispatch( storeFunc.closePopup(selectData) );
     //const prev       = () => dispatch( storeFunc.prev() );
     //const next      = () => dispatch( storeFunc.next() );
-    //const selectDate = date => dispatch( storeFunc.selectDate(date) );
+    //const selectDate = date => dispatch( storeFunc.selectDate(date) );    
     return (
         <>
                 <div style={{ textAlign : 'center', fontSize : '30px' }}>                    

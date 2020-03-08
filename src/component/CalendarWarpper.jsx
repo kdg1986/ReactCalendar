@@ -20,6 +20,6 @@ export default connect(
         ,next           : () => dispatch(storeFunc.next())
         ,selectDate     : date => dispatch(storeFunc.selectDate(date))
         ,closePopup     : date => dispatch(storeFunc.closePopup(date))
-        ,saveSchdule    : date => dispatch(storeFunc.saveSchdule(date))        
+        ,saveSchdule    : date => dispatch(storeFunc.saveSchdule(date))
     }) */
 )( React.memo(CalendarWarpper) );
